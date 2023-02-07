@@ -1,7 +1,11 @@
+"""Entities"""
+
 from homeassistant.components.switch import SwitchDeviceClass
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
+
 from . import PersonioUpdateCoordinator
 from .const import DOMAIN
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
+
 
 class PersonioAttendanceEntity(CoordinatorEntity[PersonioUpdateCoordinator]):
     """Representation of a attendance entity."""

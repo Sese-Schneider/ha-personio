@@ -4,19 +4,15 @@ from dataclasses import dataclass
 import time
 from typing import Any
 
+from homeassistant.components.switch import SwitchEntity, SwitchEntityDescription
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.restore_state import RestoreEntity
+
 from . import PersonioUpdateCoordinator
 from .const import COORDINATOR, DOMAIN
 from .entity import PersonioAttendanceEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers.restore_state import RestoreEntity
-from homeassistant.components.switch import (
-    SwitchEntity,
-    SwitchEntityDescription,
-)
-
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-
 
 ATTR_IS_ON = "attr_is_on"
 ATTR_TURN_ON_TIME = "attr_turn_on_time"
