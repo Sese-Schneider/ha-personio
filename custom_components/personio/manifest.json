@@ -7,7 +7,7 @@
   "dependencies": [],
   "requirements": ["pyjwt"],
   "iot_class": "cloud_polling",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "codeowners": ["@Sese-Schneider"],
   "config_flow": true
 }
