@@ -1,16 +1,17 @@
 """Personio config flow."""
 
 from typing import Any
-from .api.authentication import authenticate
 
-import homeassistant.helpers.config_validation as cv
+from requests import HTTPError
 import voluptuous as vol
+
 from homeassistant import config_entries
 from homeassistant.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
 from homeassistant.data_entry_flow import FlowResult
-from requests import HTTPError
+import homeassistant.helpers.config_validation as cv
 
-from .const import CONF_USER, DOMAIN, CONF_PARTNER_ID, CONF_APP_ID
+from .api import authenticate
+from .const import CONF_APP_ID, CONF_PARTNER_ID, CONF_USER, DOMAIN
 
 
 class PersonioConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -43,7 +44,7 @@ class PersonioConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             CONF_USER: user_input.get(CONF_USER),
         }
 
-        return await self._validate_and_create("user", data_schema, data);
+        return await self._validate_and_create("user", data_schema, data)
 
     async def _validate_and_create(
         self, step_id: str, data_schema: vol.Schema, data: dict

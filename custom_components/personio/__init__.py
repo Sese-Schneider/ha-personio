@@ -1,22 +1,17 @@
 """Personio integration."""
 
 from __future__ import annotations
+
 import logging
 
-from requests import HTTPError
-
-from homeassistant.helpers.template import now
-
-from .const import CONF_USER, COORDINATOR, DOMAIN
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
-
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.template import now
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from .api.authentication import Authentication
-from .api.attendances import Attendances
-from .api.employees import Employees
+from .api import Attendances, Authentication, Employees
+from .const import CONF_USER, COORDINATOR, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -92,5 +87,5 @@ class PersonioUpdateCoordinator(DataUpdateCoordinator[None]):
             uid,
             start_time,
             end_time,
-            now(self._hass)
+            now(self._hass),
         )

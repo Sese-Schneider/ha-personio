@@ -1,4 +1,5 @@
-# The domain of your component. Should be equal to the name of your component.
+"""Constants"""
+
 DOMAIN = "personio"
 
 CONF_PARTNER_ID = "partner_id"
