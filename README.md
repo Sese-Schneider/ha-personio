@@ -38,7 +38,7 @@ A Home Assistant integration with the Personio API.
 
 To use the integration, you need to have API access enabled on your Personio account. You might need to reach out to your People/HR department to request that.
 
-1. Access your [settings panel](https://simpleclub.personio.de/settings/language) and click on "Generate new credential"
+1. Access your settings panel and click on "Generate new credential"
 2. Specify an application identifier. You'll need that later.
 3. You need to enable Read and Write Access to the "Attendances" data. Nothing more is needed.
 4. "Readable employee attributes" can remain empty
