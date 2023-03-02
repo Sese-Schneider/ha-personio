@@ -3,11 +3,10 @@
   "name": "Personio",
   "codeowners": ["@Sese-Schneider"],
   "config_flow": true,
-  "dependencies": [],
   "documentation": "https://github.com/Sese-Schneider/ha-personio",
   "integration_type": "hub",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/Sese-Schneider/ha-personio/issues",
   "requirements": ["pyjwt"],
-  "version": "1.0.1"
+  "version": "1.0.2"
 }
