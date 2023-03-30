@@ -11,9 +11,6 @@ A Home Assistant integration with the Personio API.
 ![Project Maintenance][maintenance-shield]
 [![GitHub Activity][commits-shield]][commits]
 
-
-[!["Buy Me A Coffee"](https://buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/seseschneider)
-
 **Features:**
 
 - Automatically adding attendances through an added `switch`.
