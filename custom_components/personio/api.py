@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 import logging
 import time
 
-import jwt
 import requests
 from requests import Response
 
@@ -19,46 +18,40 @@ class Authentication:
 
     _current_config: dict = None
     _current_token: str = None
+    _current_token_time: float = None
 
     def set_config(self, config: dict):
         """Set the current API configuration."""
         self._current_config = config["data"]
 
         # self test current auth config, fetch initial token for usage
-        self.get_bearer(invalidate=False)
+        self.get_bearer()
 
-    def get_bearer(self, invalidate: bool = True):
+    def get_bearer(self):
         """Get a currently valid authentication bearer."""
 
         if not self._current_config:
             raise HomeAssistantError("Config not defined.")
 
         if self._current_token:
-            jwt_token = jwt.decode(
-                self._current_token,
-                algorithms=["HS256"],
-                options={"verify_signature": False},
-            )
-            if jwt_token["exp"] > time.time():
-                _LOGGER.debug("Reusing existing JWT token")
+            # Bearers are valid for 24 hours
+            if self._current_token_time + (24 * 60 * 60) > time.time():
+                _LOGGER.debug("Using cached token")
                 bearer = "Bearer " + self._current_token
-                if invalidate:
-                    # bearers are one-time use only
-                    _LOGGER.debug("Invalidating JWT token")
-                    self._current_token = None
-
                 return bearer
 
-        _LOGGER.debug("Requesting new JWT token")
+        _LOGGER.debug("Requesting new token")
+
+        self._current_token_time = time.time()
         authentication = authenticate(
             self._current_config["client_id"],
             self._current_config["client_secret"],
             self._current_config["partner_id"],
             self._current_config["app_id"],
         )
-
         self._current_token = authentication.json()["data"]["token"]
-        return self.get_bearer(invalidate=invalidate)
+
+        return self.get_bearer()
 
     def get_headers(self):
         """Returns all headers required for a successful Personio API request."""
@@ -72,12 +65,6 @@ class Authentication:
         if app_id:
             headers["X-Personio-App-ID"] = app_id
         return headers
-
-    def set_response(self, response: Response):
-        """Callback after receiving a new response.
-        Call this to set new authorization headers after each successful request."""
-        self._current_token = response.headers["authorization"].removeprefix("Bearer ")
-        _LOGGER.debug("New JWT token received")
 
 
 class Employees:
@@ -96,7 +83,6 @@ class Employees:
             timeout=10000,
         )
         result.raise_for_status()
-        self._authentication.set_response(result)
 
         return result.json()["data"][0]["attributes"]["id"]["value"]
 
@@ -145,9 +131,9 @@ class Attendances:
             json={"attendances": attendances},
         )
         result.raise_for_status()
-        self._authentication.set_response(result)
 
-        _LOGGER.info("Attendance for employee %s added successfully", employee_id)
+        _LOGGER.info(
+            "Attendance for employee %s added successfully", employee_id)
 
 
 def authenticate(
@@ -165,7 +151,7 @@ def authenticate(
 
     result = requests.post(
         BASE_URL + "/auth",
-        params={"client_id": client_id, "client_secret": client_secret},
+        json={"client_id": client_id, "client_secret": client_secret},
         headers=headers,
         timeout=10000,
     )

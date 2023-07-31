@@ -3,7 +3,7 @@
 A Home Assistant integration with the Personio API.
 
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Sese-Schneider&repository=ha-personio&category=integration)
 [![GitHub Release][releases-shield]][releases]
 ![GitHub Downloads][downloads-shield]
 
@@ -21,14 +21,16 @@ A Home Assistant integration with the Personio API.
 
 ### HACS
 
-*This repo can be installed as a custom repository in HACS.*
+*This repo is available for install through the HACS.*
 
-* Go to HACS → Integration
-* Click on the three-dot-menu → Custom repositories
-* Add `Sese-Schneider/ha-personio` as Integration.
+* Go to HACS → Integrations
 * Use the FAB "Explore and download repositories" to search "Personio".
-* Restart Home Assistant
-* Install "Personio" as an integration in your settings.
+
+_or_
+
+Click here:
+
+[![](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Sese-Schneider&repository=ha-personio&category=integration)
 
 
 ## Setup
